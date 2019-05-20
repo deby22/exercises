@@ -73,7 +73,52 @@ class FibIterator:
         return self.a
 
 
+class SimpleFizzBuzzIterator:
+
+    def __init__(self, n):
+        self.n = n
+        self.i = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.n == self.i:
+            raise StopIteration
+
+        self.i += 1
+        if not self.i % 3:
+            return 'Fizz'
+        elif not self.i % 5:
+            return 'Buzz'
+        else:
+            return self.i
+
+
+class ExtendedFizzBuzzIterator:
+
+    def __init__(self, n):
+        self.n = n
+        self.i = 0
+        self.data = {3: 'Fizz', 5: 'Buzz'}
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.n == self.i:
+            raise StopIteration
+
+        self.i += 1
+        for k, v in self.data.items():
+            if not self.i % k:
+                return v
+        return self.i
+
+
 print([a for a in IncrementIterator(20)])
 print([a for a in SumIterator(20)])
 print([a for a in PowIterator(20)])
 print([a for a in FibIterator(20)])
+print([a for a in SimpleFizzBuzzIterator(20)])
+print([a for a in ExtendedFizzBuzzIterator(20)])

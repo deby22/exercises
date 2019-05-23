@@ -100,7 +100,7 @@ class ExtendedFizzBuzzIterator:
     def __init__(self, n):
         self.n = n
         self.i = 0
-        self.data = {3: 'Fizz', 5: 'Buzz'}
+        self.data = {3: 'Ala', 5: 'ma', 7: 'kota'}
 
     def __iter__(self):
         return self
@@ -116,9 +116,9 @@ class ExtendedFizzBuzzIterator:
         return self.i
 
 
-print([a for a in IncrementIterator(20)])
-print([a for a in SumIterator(20)])
-print([a for a in PowIterator(20)])
-print([a for a in FibIterator(20)])
-print([a for a in SimpleFizzBuzzIterator(20)])
-print([a for a in ExtendedFizzBuzzIterator(20)])
+print([a for a in IncrementIterator(10)])
+print([a for a in SumIterator(10)])
+print([a for a in PowIterator(10)])
+print([a for a in FibIterator(10)])
+print([a for a in SimpleFizzBuzzIterator(10)])
+print([a for a in ExtendedFizzBuzzIterator(10)])

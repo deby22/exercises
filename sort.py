@@ -3,7 +3,6 @@ from timeit import default_timer as timer
 from datetime import timedelta
 
 
-
 def bubble_sort(data):
     n = len(data)
     for i in range(n):
@@ -46,9 +45,41 @@ def quick_sort2(data, left=0, right=None):
     return data
 
 
-for a in range(10):
-    data = [random.randint(0, 100) for _ in range(90000)]
-    print('---------')
+def merge_sort(data):
+    center = len(data)  // 2
+
+    if len(data) > 1:
+        lt = merge_sort(data[:center])
+        gt = merge_sort(data[center:])
+
+        i, j, k = 0, 0, 0
+
+        while i < len(lt) and j < len(gt):
+            if lt[i] < gt[j]:
+                data[k] = lt[i]
+                i += 1
+            else:
+                data[k] = gt[j]
+                j += 1
+            k += 1
+
+        while i < len(lt):
+            data[k] = lt[i]
+            i += 1
+            k += 1
+
+        while j < len(gt):
+            data[k] = gt[j]
+            j += 1
+            k += 1
+
+    return data
+
+
+
+for a in range(17):
+    data = [random.randint(0, 100) for _ in range(pow(2, a))]
+    print('---------', a, pow(2, a))
     start = timer()
     # bubble_sort(data.copy())
     end = timer()
@@ -63,6 +94,11 @@ for a in range(10):
     quick_sort2(data.copy())
     end = timer()
     print('Quick2', timedelta(seconds=end-start))
+
+    start = timer()
+    merge_sort(data.copy())
+    end = timer()
+    print('Merge', timedelta(seconds=end-start))
 
     start = timer()
     sorted(data.copy())

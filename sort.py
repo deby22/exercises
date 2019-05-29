@@ -12,6 +12,20 @@ def bubble_sort(data):
     return data
 
 
+def bubble_sort2(data):
+    n = len(data)
+    for i in range(n):
+        swap = False
+        for j in range(n-i-1):
+            if data[j] > data[j+1]:
+                data[j], data[j+1] = data[j+1], data[j]
+                swap = True
+        if not swap:
+            break
+
+    return data
+
+
 def quick_sort(data, left=0, right=None):
 
     if right is None:
@@ -76,24 +90,81 @@ def merge_sort(data):
     return data
 
 
+def insert_sort(data):
+    for i in range(1, len(data)):
+        val = data[i]
+        pos = i
+        while pos and data[pos - 1] > val:
+            data[pos]=data[pos - 1]
+            pos -= 1
 
-for a in range(17):
+        data[pos] = val
+    return data
+
+
+def binary_search(data, item, start, end):
+    if start == end:
+        return start if data[start] > item else start + 1
+
+    if start > end:
+        return start
+
+    center = (end + start) // 2
+    if item < data[center]:
+        return binary_search(data, item, start, center - 1)
+    elif item > data[center]:
+        return binary_search(data, item, center + 1, end)
+    else:
+        return center
+
+
+def binary_insert_sort(data):
+    for i in range(1, len(data)):
+        val = data[i]
+        pos = binary_search(data, val, 0, i - 1)
+        data = data[:pos] + [val] + data[pos:i] + data[i+1:]
+    return data
+
+
+def sieve(n):
+    prime = [True for i in range(n+1)]
+    p = 2
+    while pow(p, 2) <= n:
+        if prime[p]:
+            for i in range(p*2, n+1, p):
+                prime[i] = False
+        p += 1
+
+    return [a for a in range(2, n+1) if prime[a]]
+
+
+for a in range(0):
     data = [random.randint(0, 100) for _ in range(pow(2, a))]
     print('---------', a, pow(2, a))
     start = timer()
-    # bubble_sort(data.copy())
+    bubble_sort(data.copy())
     end = timer()
-    # print('Bubble', timedelta(seconds=end-start))
+    print('Bubble', timedelta(seconds=end-start))
 
     start = timer()
     quick_sort(data.copy())
     end = timer()
     print('Quick1', timedelta(seconds=end-start))
 
+    # start = timer()
+    # quick_sort2(data.copy())
+    # end = timer()
+    # print('Quick2', timedelta(seconds=end-start))
+
     start = timer()
-    quick_sort2(data.copy())
+    insert_sort(data.copy())
     end = timer()
-    print('Quick2', timedelta(seconds=end-start))
+    print('Insert', timedelta(seconds=end-start))
+
+    start = timer()
+    binary_insert_sort(data.copy())
+    end = timer()
+    print('Binary', timedelta(seconds=end-start))
 
     start = timer()
     merge_sort(data.copy())

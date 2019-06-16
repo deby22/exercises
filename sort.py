@@ -126,19 +126,24 @@ def binary_insert_sort(data):
     return data
 
 
-def sieve(n):
-    prime = [True for i in range(n+1)]
-    p = 2
-    while pow(p, 2) <= n:
-        if prime[p]:
-            for i in range(p*2, n+1, p):
-                prime[i] = False
-        p += 1
+def counting_sort(data):
 
-    return [a for a in range(2, n+1) if prime[a]]
+    _min = min(data)
+    _max = max(data) + 1
+
+    tmp = [0 for a in range(_min, _max)]
+    result = []
+
+    for a in data:
+        tmp[a - _min] += 1
+
+    for i, a in enumerate(tmp):
+        result.extend([i + _min] * a)
+
+    return result
 
 
-for a in range(0):
+for a in range(10, 16):
     data = [random.randint(0, 100) for _ in range(pow(2, a))]
     print('---------', a, pow(2, a))
     start = timer()
@@ -170,6 +175,11 @@ for a in range(0):
     merge_sort(data.copy())
     end = timer()
     print('Merge', timedelta(seconds=end-start))
+
+    start = timer()
+    counting_sort(data.copy())
+    end = timer()
+    print('Counting', timedelta(seconds=end-start))
 
     start = timer()
     sorted(data.copy())
